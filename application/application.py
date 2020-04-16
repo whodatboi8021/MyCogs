@@ -35,7 +35,7 @@ class Application(Cog):
     @checks.bot_has_permissions(manage_roles=True)
     async def apply(self, ctx: commands.Context):
         """Apply for free agency."""
-        role_add = get(ctx.guild.roles, name="Free Agents")
+        role_add = get(ctx.guild.roles, name="Free Agent")
         channel = get(ctx.guild.text_channels, name="free-agent-application")
         if ctx.guild not in self.antispam:
             self.antispam[ctx.guild] = {}
@@ -133,14 +133,14 @@ class Application(Cog):
         )
         self.antispam[ctx.guild][ctx.author].stamp()
 
-    @checks.admin_or_permissions(administrator=True)
+    @checks.admin_or_permissions(administrator=False)
     @commands.command()
     @commands.guild_only()
     @checks.bot_has_permissions(manage_channels=True, manage_roles=True)
     async def applysetup(self, ctx: commands.Context):
         """Go through the initial setup process."""
         pred = MessagePredicate.yes_or_no(ctx)
-        applicant = get(ctx.guild.roles, name="Free Agents")
+        applicant = get(ctx.guild.roles, name="Free Agent")
         channel = get(ctx.guild.text_channels, name="free-agent-application")
 
         await ctx.send(
@@ -155,7 +155,7 @@ class Application(Cog):
         if applicant is None:
             try:
                 await ctx.guild.create_role(
-                    name="Free Agents", reason="Application cog setup"
+                    name="Free Agent", reason="Application cog setup"
                 )
             except discord.Forbidden:
                 return await ctx.send(
@@ -197,14 +197,14 @@ class Application(Cog):
             "You have finished the setup! Please, move your new channel to the category you want it in."
         )
 
-    @checks.admin_or_permissions(administrator=True)
+    @checks.admin_or_permissions(administrator=False)
     @commands.command()
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
     async def accept(self, ctx: commands.Context, target: discord.Member):
         """Accept a free agent application.
         <target> can be a mention or an ID."""
-        applicant = get(ctx.guild.roles, name="Free Agents")
+        applicant = get(ctx.guild.roles, name="Free Agent")
         role = MessagePredicate.valid_role(ctx)
         if applicant in target.roles:
             await ctx.send(f"What role do you want to accept {target.name} as?")
@@ -224,14 +224,14 @@ class Application(Cog):
                 f"Uh oh. Looks like {target.mention} hasn't applied for anything."
             )
 
-    @checks.admin_or_permissions(administrator=True)
+    @checks.admin_or_permissions(administrator=False)
     @commands.command()
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
     async def deny(self, ctx: commands.Context, target: discord.Member):
         """Deny a free agent applicant.
         <target> can be a mention or an ID"""
-        applicant = get(ctx.guild.roles, name="Free Agents")
+        applicant = get(ctx.guild.roles, name="Free Agent")
         if applicant in target.roles:
             await ctx.send("Would you like to specify a reason? (yes/no)")
             pred = MessagePredicate.yes_or_no(ctx)
