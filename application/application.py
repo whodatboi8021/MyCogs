@@ -114,15 +114,15 @@ class Application(Cog):
             f"User: {ctx.author.name}#{ctx.author.discriminator} ({ctx.author.id})"
         )
         embed.add_field(name="Name:", value=name.content, inline=True)
-        embed.add_field(name="Age:", value=age.content, inline=True)
-        embed.add_field(name="Timezone:", value=timezone.content, inline=True)
-        embed.add_field(name="Desired position:", value=position.content, inline=True)
-        embed.add_field(name="Active days/week:", value=days.content, inline=True)
-        embed.add_field(name="Active hours/day:", value=hours.content, inline=True)
+        embed.add_field(name="Rank:", value=age.content, inline=True)
+        embed.add_field(name="Region:", value=timezone.content, inline=True)
+        embed.add_field(name="Strengths:", value=position.content, inline=True)
+        embed.add_field(name="Weaknesses:", value=days.content, inline=True)
+        embed.add_field(name="About me:", value=hours.content, inline=True)
         embed.add_field(
             name="Previous experience:", value=experience.content, inline=False
         )
-        embed.add_field(name="Reason:", value=reason.content, inline=False)
+        embed.add_field(name="Teams interested in:", value=reason.content, inline=False)
 
         await channel.send(embed=embed)
 
