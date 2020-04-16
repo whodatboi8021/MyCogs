@@ -35,7 +35,7 @@ class Application(Cog):
     @checks.bot_has_permissions(manage_roles=True)
     async def apply(self, ctx: commands.Context):
         """Apply for free agency."""
-        role_add = get(ctx.guild.roles, name="Free Agent")
+        role_add = get(ctx.guild.roles, name="Free Agents")
         channel = get(ctx.guild.text_channels, name="free-agent-application")
         if ctx.guild not in self.antispam:
             self.antispam[ctx.guild] = {}
@@ -140,7 +140,7 @@ class Application(Cog):
     async def applysetup(self, ctx: commands.Context):
         """Go through the initial setup process."""
         pred = MessagePredicate.yes_or_no(ctx)
-        applicant = get(ctx.guild.roles, name="Free Agent")
+        applicant = get(ctx.guild.roles, name="Free Agents")
         channel = get(ctx.guild.text_channels, name="free-agent-application")
 
         await ctx.send(
@@ -155,7 +155,7 @@ class Application(Cog):
         if applicant is None:
             try:
                 await ctx.guild.create_role(
-                    name="Free Agent", reason="Application cog setup"
+                    name="Free Agents", reason="Application cog setup"
                 )
             except discord.Forbidden:
                 return await ctx.send(
@@ -204,7 +204,7 @@ class Application(Cog):
     async def accept(self, ctx: commands.Context, target: discord.Member):
         """Accept a free agent application.
         <target> can be a mention or an ID."""
-        applicant = get(ctx.guild.roles, name="Free Agent")
+        applicant = get(ctx.guild.roles, name="Free Agents")
         role = MessagePredicate.valid_role(ctx)
         if applicant in target.roles:
             await ctx.send(f"What role do you want to accept {target.name} as?")
@@ -231,7 +231,7 @@ class Application(Cog):
     async def deny(self, ctx: commands.Context, target: discord.Member):
         """Deny a free agent applicant.
         <target> can be a mention or an ID"""
-        applicant = get(ctx.guild.roles, name="Free Agent")
+        applicant = get(ctx.guild.roles, name="Free Agents")
         if applicant in target.roles:
             await ctx.send("Would you like to specify a reason? (yes/no)")
             pred = MessagePredicate.yes_or_no(ctx)
