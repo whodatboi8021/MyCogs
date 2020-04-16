@@ -65,39 +65,39 @@ class Application(Cog):
             return m.author == ctx.author and m.channel == ctx.author.dm_channel
 
         try:
-            position = await self.bot.wait_for("message", timeout=120, check=check)
+            name = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("What is your name?")
         try:
-            name = await self.bot.wait_for("message", timeout=120, check=check)
+            Rank = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Rank?(Please provide TRL - Rocket League Tracker)")
         try:
-            age = await self.bot.wait_for("message", timeout=120, check=check)
+            region = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("NA or EU?")
         try:
-            timezone = await self.bot.wait_for("message", timeout=120, check=check)
+            strengths = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Strengths?")
         try:
-            days = await self.bot.wait_for("message", timeout=120, check=check)
+            weaknesses = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Weaknesses?")
         try:
-            hours = await self.bot.wait_for("message", timeout=120, check=check)
+            about me = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send(
             "Tell the teams a little bit about yourself."
         )
         try:
-            experience = await self.bot.wait_for("message", timeout=120, check=check)
+            Teams interested in = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Specific Teams you are interested in?")
@@ -114,15 +114,15 @@ class Application(Cog):
             f"User: {ctx.author.name}#{ctx.author.discriminator} ({ctx.author.id})"
         )
         embed.add_field(name="Name:", value=name.content, inline=True)
-        embed.add_field(name="Rank:", value=age.content, inline=True)
+        embed.add_field(name="Rank:", value=Rank.content, inline=True)
         embed.add_field(name="Region:", value=timezone.content, inline=True)
         embed.add_field(name="Currently a free agent:", value=position.content, inline=True)
-        embed.add_field(name="Strengths:", value=days.content, inline=True)
-        embed.add_field(name="Weaknesses:", value=hours.content, inline=True)
+        embed.add_field(name="Strengths:", value=strengths.content, inline=True)
+        embed.add_field(name="Weaknesses:", value=weaknesses.content, inline=True)
         embed.add_field(
-            name="About me:", value=experience.content, inline=False
+            name="About me:", value=About me.content, inline=False
         )
-        embed.add_field(name="Teams interested in:", value=reason.content, inline=False)
+        embed.add_field(name="Teams interested in:", value=Teams interested in.content, inline=False)
 
         await channel.send(embed=embed)
 
