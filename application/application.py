@@ -36,7 +36,7 @@ class Application(Cog):
     async def apply(self, ctx: commands.Context):
         """Apply to be a staff member."""
         role_add = get(ctx.guild.roles, name="Free Agent")
-        channel = get(ctx.guild.text_channels, name="FA Applications")
+        channel = get(ctx.guild.text_channels, name="Applications")
         if ctx.guild not in self.antispam:
             self.antispam[ctx.guild] = {}
         if ctx.author not in self.antispam[ctx.guild]:
@@ -140,7 +140,7 @@ class Application(Cog):
         """Go through the initial setup process."""
         pred = MessagePredicate.yes_or_no(ctx)
         applicant = get(ctx.guild.roles, name="Free Agent")
-        channel = get(ctx.guild.text_channels, name="FA Applications")
+        channel = get(ctx.guild.text_channels, name="Applications")
 
         await ctx.send(
             "This will create required channel and role. Do you wish to continue? (yes/no)"
@@ -184,7 +184,7 @@ class Application(Cog):
                 }
             try:
                 await ctx.guild.create_text_channel(
-                    "FA Applications",
+                    "Applications",
                     overwrites=overwrites,
                     reason="Application cog setup",
                 )
