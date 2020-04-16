@@ -65,7 +65,7 @@ class Application(Cog):
             return m.author == ctx.author and m.channel == ctx.author.dm_channel
 
         try:
-            Name = await self.bot.wait_for("message", timeout=120, check=check)
+            name = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("What is your name?")
@@ -80,12 +80,12 @@ class Application(Cog):
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("EU or NA?")
         try:
-            Strenghts = await self.bot.wait_for("message", timeout=120, check=check)
+            strenghts = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Strengths?")
         try:
-            Weaknesses = await self.bot.wait_for("message", timeout=120, check=check)
+            weaknesses = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Weaknesses?")
@@ -116,8 +116,8 @@ class Application(Cog):
         embed.add_field(name="Name:", value=name.content, inline=True)
         embed.add_field(name="Rank:", value=rank.content, inline=True)
         embed.add_field(name="Region:", value=region.content, inline=True)
-        embed.add_field(name="Strenghts:", value=Strenghts.content, inline=True)
-        embed.add_field(name="Weaknesses:", value=Weaknesses.content, inline=True)
+        embed.add_field(name="Strenghts:", value=strenghts.content, inline=True)
+        embed.add_field(name="Weaknesses:", value=weaknesses.content, inline=True)
         embed.add_field(name="About me:", value=about.content, inline=True)
         embed.add_field(
             name="Teams interested in:", value=teams.content, inline=False
