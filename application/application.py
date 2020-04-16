@@ -34,9 +34,9 @@ class Application(Cog):
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
     async def apply(self, ctx: commands.Context):
-        """Apply to be a staff member."""
+        """Apply for Free Agency."""
         role_add = get(ctx.guild.roles, name="Free Agent")
-        channel = get(ctx.guild.text_channels, name="Applications")
+        channel = get(ctx.guild.text_channels, name="free-agent-application")
         if ctx.guild not in self.antispam:
             self.antispam[ctx.guild] = {}
         if ctx.author not in self.antispam[ctx.guild]:
@@ -140,7 +140,7 @@ class Application(Cog):
         """Go through the initial setup process."""
         pred = MessagePredicate.yes_or_no(ctx)
         applicant = get(ctx.guild.roles, name="Free Agent")
-        channel = get(ctx.guild.text_channels, name="Applications")
+        channel = get(ctx.guild.text_channels, name="free-agent-application")
 
         await ctx.send(
             "This will create required channel and role. Do you wish to continue? (yes/no)"
