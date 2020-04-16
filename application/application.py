@@ -106,7 +106,7 @@ class Application(Cog):
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         embed = discord.Embed(color=await ctx.embed_colour(), timestamp=datetime.now())
-        embed.set_author(name="New application!", icon_url=ctx.author.avatar_url)
+        embed.set_author(name="Free Agent Application!", icon_url=ctx.author.avatar_url)
         embed.set_footer(
             text=f"{ctx.author.name}#{ctx.author.discriminator} ({ctx.author.id})"
         )
@@ -133,7 +133,7 @@ class Application(Cog):
         )
         self.antispam[ctx.guild][ctx.author].stamp()
 
-    @checks.admin_or_permissions(administrator=False)
+    @checks.admin_or_permissions(administrator=True)
     @commands.command()
     @commands.guild_only()
     @checks.bot_has_permissions(manage_channels=True, manage_roles=True)
@@ -141,7 +141,7 @@ class Application(Cog):
         """Go through the initial setup process."""
         pred = MessagePredicate.yes_or_no(ctx)
         applicant = get(ctx.guild.roles, name="Free Agent")
-        channel = get(ctx.guild.text_channels, name="free-agent-application")
+        channel = get(ctx.guild.text_channels, name="free-agent-applications")
 
         await ctx.send(
             "This will create required channel and role. Do you wish to continue? (yes/no)"
@@ -197,7 +197,7 @@ class Application(Cog):
             "You have finished the setup! Please, move your new channel to the category you want it in."
         )
 
-    @checks.admin_or_permissions(administrator=False)
+    @checks.admin_or_permissions(administrator=True)
     @commands.command()
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
@@ -224,7 +224,7 @@ class Application(Cog):
                 f"Uh oh. Looks like {target.mention} hasn't applied for anything."
             )
 
-    @checks.admin_or_permissions(administrator=False)
+    @checks.admin_or_permissions(administrator=True)
     @commands.command()
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
