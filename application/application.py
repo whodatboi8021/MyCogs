@@ -34,7 +34,7 @@ class Application(Cog):
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
     async def apply(self, ctx: commands.Context):
-        """Apply for Free Agency."""
+        """Apply to be a staff member."""
         role_add = get(ctx.guild.roles, name="Free Agent")
         channel = get(ctx.guild.text_channels, name="free-agent-application")
         if ctx.guild not in self.antispam:
@@ -53,24 +53,24 @@ class Application(Cog):
             )
         try:
             await ctx.author.send(
-                "Let's start right away! You have maximum of 2 minutes for each question.Are you applying for Free Agency?"
+                "Let's start right away! You have maximum of 2 minutes for each question. Are you applying for free agency?"
             )
         except discord.Forbidden:
             return await ctx.send(
                 "I don't seem to be able to DM you. Do you have closed DMs?"
             )
-        await ctx.send(f"Okay, {ctx.author.mention}, I've sent you a DM.")
+        await ctx.send(f"Hello! {ctx.author.mention}, I've sent you a DM.")
 
         def check(m):
             return m.author == ctx.author and m.channel == ctx.author.dm_channel
 
         try:
-            name = await self.bot.wait_for("message", timeout=120, check=check)
+            Name = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("What is your name?")
         try:
-            Rank = await self.bot.wait_for("message", timeout=120, check=check)
+            rank = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Rank?(Please provide TRL - Rocket League Tracker)")
@@ -78,26 +78,26 @@ class Application(Cog):
             region = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
-        await ctx.author.send("NA or EU?")
+        await ctx.author.send("EU or NA?")
         try:
-            strengths = await self.bot.wait_for("message", timeout=120, check=check)
+            Strenghts = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Strengths?")
         try:
-            weaknesses = await self.bot.wait_for("message", timeout=120, check=check)
+            Weaknesses = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Weaknesses?")
         try:
-            about me = await self.bot.wait_for("message", timeout=120, check=check)
+            about = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send(
-            "Tell the teams a little bit about yourself."
+            "Tell the teams a little bit about you."
         )
         try:
-            Teams interested in = await self.bot.wait_for("message", timeout=120, check=check)
+            teams = await self.bot.wait_for("message", timeout=120, check=check)
         except asyncio.TimeoutError:
             return await ctx.send("You took too long. Try again, please.")
         await ctx.author.send("Specific Teams you are interested in?")
@@ -114,22 +114,21 @@ class Application(Cog):
             f"User: {ctx.author.name}#{ctx.author.discriminator} ({ctx.author.id})"
         )
         embed.add_field(name="Name:", value=name.content, inline=True)
-        embed.add_field(name="Rank:", value=Rank.content, inline=True)
-        embed.add_field(name="Region:", value=timezone.content, inline=True)
-        embed.add_field(name="Currently a free agent:", value=position.content, inline=True)
-        embed.add_field(name="Strengths:", value=strengths.content, inline=True)
-        embed.add_field(name="Weaknesses:", value=weaknesses.content, inline=True)
+        embed.add_field(name="Rank:", value=rank.content, inline=True)
+        embed.add_field(name="Region:", value=region.content, inline=True)
+        embed.add_field(name="Strenghts:", value=Strenghts.content, inline=True)
+        embed.add_field(name="Weaknesses:", value=Weaknesses.content, inline=True)
+        embed.add_field(name="About me:", value=about.content, inline=True)
         embed.add_field(
-            name="About me:", value=About me.content, inline=False
+            name="Teams interested in:", value=teams.content, inline=False
         )
-        embed.add_field(name="Teams interested in:", value=Teams interested in.content, inline=False)
 
         await channel.send(embed=embed)
 
         await ctx.author.add_roles(role_add)
 
         await ctx.author.send(
-            "Your application has been submitted. Thank you!"
+            "Your application has been submitted! Thank you!"
         )
         self.antispam[ctx.guild][ctx.author].stamp()
 
@@ -155,7 +154,7 @@ class Application(Cog):
         if applicant is None:
             try:
                 await ctx.guild.create_role(
-                    name="Free Agent", reason="Application cog setup"
+                    name="FA Application", reason="Application cog setup"
                 )
             except discord.Forbidden:
                 return await ctx.send(
@@ -163,7 +162,7 @@ class Application(Cog):
                 )
         if channel is None:
             await ctx.send(
-                "Do you want everyone to see the application channel? (yes/no)"
+                "Do you want everyone to see the applications channel? (yes/no)"
             )
             try:
                 await self.bot.wait_for("message", timeout=30, check=pred)
@@ -202,7 +201,7 @@ class Application(Cog):
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
     async def accept(self, ctx: commands.Context, target: discord.Member):
-        """Accept Free Agent applicant.
+        """Accept a staff applicant.
         <target> can be a mention or an ID."""
         applicant = get(ctx.guild.roles, name="Free Agent")
         role = MessagePredicate.valid_role(ctx)
@@ -229,7 +228,7 @@ class Application(Cog):
     @commands.guild_only()
     @checks.bot_has_permissions(manage_roles=True)
     async def deny(self, ctx: commands.Context, target: discord.Member):
-        """Deny Free Agent applicant.
+        """Deny a staff applicant.
         <target> can be a mention or an ID"""
         applicant = get(ctx.guild.roles, name="Free Agent")
         if applicant in target.roles:
