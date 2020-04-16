@@ -53,7 +53,7 @@ class Application(Cog):
             )
         try:
             await ctx.author.send(
-                "Let's start right away! You have maximum of 2 minutes for each question.\nWhat position are you applying for?"
+                "Let's start right away! You have maximum of 2 minutes for each question.Are you applying for Free Agency?"
             )
         except discord.Forbidden:
             return await ctx.send(
